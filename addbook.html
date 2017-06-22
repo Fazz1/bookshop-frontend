@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <link rel='icon' type='image/png' href="images/icon.png">
+    <title>BookShop - Buy any book</title>
+    <link rel="stylesheet" href="stylesheets/bootstrap.min.css">
+    <link rel="stylesheet" href="stylesheets/animate.css">
+    <script src="javascripts/jquery.min.js"></script>
+    <script src="javascripts/bootstrap.min.js"></script>
+    <style>
+        #books{
+            font-size: 32px;
+            font-family: "Georgia, 'Ties New Roman', Times, serif"
+            
+        }
+        option{
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            font-size: 24px;
+            text-align: center
+        }
+        .main-book{
+            font-size:20px;
+            margin-top: 30px;
+            background-color: #FAFAFB;
+            box-shadow: 5px 5px 5px grey;
+            padding:20px;
+            padding-left: 30px;
+            padding-right: 30px;
+            font-family: 'Times New Roman', Times, serif;
+        }
+  </style>
+</head>
+
+<body style='margin-bottom: 130px'>
+<nav class='navbar navbar-inverse' style='border-radius:0;margin-bottom: 0'>
+<div class='container-fluid'>
+    <div class='navbar-header'>
+        <a href="#" class='navbar-brand text-success'>BookShop</a>
+        <button class='navbar-toggle' type="button" data-toggle='collapse' data-target='#navbar'>
+					<span class='icon-bar'></span>
+					<span class='icon-bar'></span>
+					<span class='icon-bar'></span>
+				</button>
+    </div>
+    <div class='collapse navbar-collapse' id='navbar'>
+        <ul class='nav navbar-nav navbar-right'>
+            <li><a href="index.html">Go Back</a></li>
+        </ul>
+    </div>
+</div>
+</nav>
+
+<div class='container-fluid' style='margin-top:80px'>
+<div class='row'>
+    <div class='col-sm-3'></div>
+    <div class='col-sm-6'>
+        <div class='form-group'>
+            <label for="search"></label>
+            <input class='form-control' type='text' name='search' id='search' placeholder="Search Any Book..." />
+        </div>
+    </div>
+    <div class='col-sm-3'></div>
+</div>
+</div>
+
+
+<div class='container' id='add-here' style='margin-top:50px;'>
+
+</div>
+
+
+<script>
+
+    $(document).ready(function () {
+        var datas;
+        $('#search').on('keyup', function () {
+            var value = $(this).val();
+
+            $.ajax({
+                url: 'http://localhost:3000/books?q=' + value,
+                type: 'GET',
+                success: function (books) {
+                    if (books.status == 200) {
+                        $('#add-here').html("");
+                        datas = books.data;
+
+                        books.data.forEach(function (book, i) {
+                            var html1 =
+                                "<div class='row main-book' title=" + book.publisher + " ><div class='col-sm-12'><center><h1 ><u>" + book.title + "</u></h1> </center><h2 class='pull-right'><i>by </i>" + book.authors[0] + "</h2><br><br><h3 style='font-size:16px;'>" + book.description.substr(0, 600) + " ...</h3><div class='row' style='margin-top: 20px;margin-left:150px;'><div class='col-sm-3'><center>" + book.price + "</center></div><div class='col-sm-3'><center>" + book.rating + " / 5</center></div><div class='col-sm-3'><center><input class='form-control' type='number' placeholder='Enter quantity''  id='q" + i + "' /></center></div></div><div class='row' style='margin-top:30px;margin-left:150px;'><div class='col-sm-3'></div><div class='col-sm-3'><center><button class='btn btn-success' title=" + i + ">Add Book</button></center></div><div class='col-sm-3'></div></div></div></div>";
+
+                            $('#add-here').append(html1);
+
+                        });
+                        $('.btn').click(function () {
+                            var index = $(this).attr('title');
+                            index = parseInt(index);
+                            var bookAsset = datas[index];
+                            var id = "#q" + index;
+                            var quantity = $(id).val();
+                            if (quantity == NaN || quantity == "") {
+                                alert("Enter quantity");
+                            }
+                            else {
+                                quantity = parseInt(quantity);
+                                $.ajax({
+                                    url: 'http://localhost:3000/books/add',
+                                    type: 'POST',
+                                    contentType: "application/json; charset=utf-8",
+                                    dataType: "json",
+                                    data: JSON.stringify({
+                                        data: bookAsset,
+                                        quantity: quantity
+                                    }),
+                                    success: function (response) {
+                                        alert("Book Added");
+                                    }
+                                })
+                            }
+
+                        });
+
+                    }
+                }
+            })
+        })
+
+    });
+
+
+</script>
+
+</body>
+
+</html>
