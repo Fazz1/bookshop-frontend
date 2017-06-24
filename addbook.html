@@ -81,7 +81,7 @@
             var value = $(this).val();
 
             $.ajax({
-                url: 'http://localhost:3000/books?q=' + value,
+                url: 'https://bookshopapi123.herokuapp.com/books?q=' + value,
                 type: 'GET',
                 success: function (books) {
                     if (books.status == 200) {
@@ -107,7 +107,7 @@
                             else {
                                 quantity = parseInt(quantity);
                                 $.ajax({
-                                    url: 'http://localhost:3000/books/add',
+                                    url: 'https://bookshopapi123.herokuapp.com/books/add',
                                     type: 'POST',
                                     contentType: "application/json; charset=utf-8",
                                     dataType: "json",
