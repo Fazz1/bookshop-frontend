@@ -48,7 +48,7 @@
     <div class='collapse navbar-collapse' id='navbar'>
         <ul class='nav navbar-nav navbar-right'>
             <li><a href="index.html">Search Books</a></li>
-            <li><a href="logout.html">Login</a></li>
+            <li><a href="signup.html">SignUp</a></li>
         </ul>
     </div>
 </div>
@@ -83,7 +83,7 @@
             var username = $('#username').val();
             var password = $('#password').val();
             $.ajax({
-                url: 'https://bookshopapi123.herokuapp.com/login',
+                url: 'http://bookshoopapi.herokuapp.com/login',
                 type: 'POST',
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
