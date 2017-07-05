@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="stylesheets/animate.css">
     <script src="javascripts/jquery.min.js"></script>
     <script src="javascripts/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="stylesheets/index.css">
+    <link rel="stylesheet" href="stylesheets/materialize.min.css">
     <style>
         #books{
             font-size: 32px;
@@ -31,11 +33,14 @@
             padding-right: 30px;
             font-family: 'Times New Roman', Times, serif;
         }
+        .btn-danger:hover{
+            background-color:#F8BBD0
+        }
   </style>
 </head>
 
 <body style='margin-bottom: 130px'>
-<nav class='navbar navbar-inverse' style='border-radius:0;margin-bottom: 0'>
+<nav class='navbar navbar-default' style='border-radius:0;margin-bottom: 0'>
 <div class='container-fluid'>
     <div class='navbar-header'>
         <a href="#" class='navbar-brand text-success'>BookShop</a>
@@ -47,33 +52,49 @@
     </div>
     <div class='collapse navbar-collapse' id='navbar'>
         <ul class='nav navbar-nav navbar-right'>
-            <li><a href="index.html">Search Books</a></li>
+            <li><a href="index.html">Go Back</a></li>
             <li><a href="login.html">Login</a></li>
         </ul>
     </div>
 </div>
 </nav>
 
+<div class='container ' style='margin-top:80px;'>
+<div class='row'>
+    <div class='col-sm-2'></div>
+    <div class='col-sm-8'>
+        <div class='input-field q'>
+            <center class='wow flip'>WELCOME TO AMIN'S BOOKSHOP</center>
+        </div>
+    </div>
+    <div class='col-sm-2'></div>
+</div>
 
-<div class='container' style='margin-top:100px'>
+</div>
+
+
+<div class='container-fluid ' style='margin-top:70px'>
 <div class='col-sm-3'></div>
-<div class='col-sm-6'>
-    <div class='form-group'>
-        <label for='name'>Name</label>
-        <input type="text" id='name' name="name" class='form-control' required>
+<div class='col-sm-6 wow bounceInUp' style="padding: 20px;">
+    <div class='input-field'>
+        
+        <input type="text" id='name' name="name"  required>
+        <label for='name'>NAME</label>
     </div>
-    <div class='form-group'>
-        <label for='username'>Username</label>
-        <input type="text" id='username' name="username" class='form-control' required>
+    <div class='input-field'>
+        
+        <input type="text" id='username' name="username"  required>
+        <label for='username'>USERNAME</label>
     </div>
-    <div class='form-group'>
-        <label for='password'>Password</label>
-        <input type="password" id='password' name="password" class='form-control' required>
+    <div class='input-field'>
+        
+        <input type="password" id='password' name="password"  required>
+        <label for='password'>PASSWORD</label>
     </div>
     <br>
     <center>
         <div class='form-group' style='width:100px'>
-<btn class='btn form-control btn-success' id='btnClick'>REGISTER</button>
+            <btn class='btn form-control btn-danger' id='btnClick'>  REGISTER  </button>
     </div>
     </center>
     </form>
@@ -82,6 +103,12 @@
 
 
     <script>
+    $("input").on("focus",function(){
+            $(this).next().addClass("active");
+        })
+        $("input").on("blur",function(){
+            $(this).next().removeClass("active");
+        })
         $('#btnClick').click(function () {
             var name = $('#name').val();
             var username = $('#username').val();
@@ -98,10 +125,10 @@
                 }),
                 success: function (response) {
                     if (response.status == 201) {
-                        document.cookie="idOfUser="+response.user._id+";expires;path=/";
-                        var val = readCookie("idOfUser"); 
-                        console.log(val);      
-                        window.location="file:///home/lakapoor/Desktop/coffee/FreeLancing/Amin/bookshop-client/index.html";
+                        document.cookie = "idOfUser=" + response.user._id + ";expires;path=/";
+                        var val = readCookie("idOfUser");
+                        console.log(val);
+                        window.location = "file:///home/lakapoor/Desktop/coffee/FreeLancing/Amin/bookshop-client/index.html";
 
                     }
                     else {
@@ -136,7 +163,12 @@
         function eraseCookie(name) {
             createCookie(name, "", -1);
         }
-    </script>
+</script>
+<script src='javascripts/wow.js' ></script>
+<script type='text/javascript'>
+            new WOW().init();
+</script>
+
 
 
 

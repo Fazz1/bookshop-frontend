@@ -8,8 +8,11 @@
     <title>BookShop - Buy any book</title>
     <link rel="stylesheet" href="stylesheets/bootstrap.min.css">
     <link rel="stylesheet" href="stylesheets/animate.css">
+
     <script src="javascripts/jquery.min.js"></script>
     <script src="javascripts/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="stylesheets/index.css">
+    <link rel="stylesheet" href="stylesheets/materialize.min.css">
     <style>
         #books{
             font-size: 32px;
@@ -31,14 +34,15 @@
             padding-right: 30px;
             font-family: 'Times New Roman', Times, serif;
         }
+        
   </style>
 </head>
 
 <body style='margin-bottom: 130px'>
-<nav class='navbar navbar-inverse' style='border-radius:0;margin-bottom: 0'>
+<nav class='navbar navbar-default' style='border-radius:0;margin-bottom: 0'>
 <div class='container-fluid'>
     <div class='navbar-header'>
-        <a href="#" class='navbar-brand text-success'>BookShop</a>
+        <a href="#" class='navbar-brand text-success'>Amin's BookShop</a>
         <button class='navbar-toggle' type="button" data-toggle='collapse' data-target='#navbar'>
 					<span class='icon-bar'></span>
 					<span class='icon-bar'></span>
@@ -47,21 +51,21 @@
     </div>
     <div class='collapse navbar-collapse' id='navbar'>
         <ul class='nav navbar-nav navbar-right'>
-            <li><a href="addbook.html">Add Books</a></li>
-            <li><a href="signup.html">Signup</a></li>
-            <li><a href="login.html">Login</a></li>
-            <li><a href="cart.html">Cart</a></li>
+            <li><a href="addbook.html">ADD BOOKS</a></li>
+            <li><a href="signup.html">SIGNUP</a></li>
+            <li><a href="login.html">LOGIN</a></li>
+            <li><a href="cart.html">CART</a></li>
         </ul>
     </div>
 </div>
 </nav>
 
-<div class='container ' style='margin-top:150px;'>
+<div class='container ' style='margin-top:150px;display:none'>
 <div class='row'>
     <div class='col-sm-2'></div>
     <div class='col-sm-8'>
         <div class='form-group'>
-            <select name='books' id="book" class='form-control text-center'>
+            <select name='books'  id="book" class='form-control text-center'>
                         <option value="" disabled selected>Seach Books...</option>
                 </select>
         </div>
@@ -71,8 +75,45 @@
 
 </div>
 
+<div class='container ' style='margin-top:150px;'>
+<div class='row'>
+    <div class='col-sm-2'></div>
+    <div class='col-sm-8'>
+        <div class='form-group q'>
+            <center class='wow flip'>WELCOME TO AMIN'S BOOKSHOP</center>
+        </div>
+    </div>
+    <div class='col-sm-2'></div>
+</div>
 
-<div class='container' id='add-here' style='margin-top:50px;'>
+</div>
+
+
+
+<div class="container-fluid wow swing" style="margin-top:100px;">
+<div class="col-sm-12 ">
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Authors</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th>Rating</th>
+                    <th>Quantity</th>
+                    <th>Add to Cart</th>
+                </tr>
+            </thead>
+            <tbody id='add-here'>
+            </tbody>
+        </table>
+    </div>
+</div>
+</div>
+
+
+<div class='container' style='margin-top:50px;'>
 <!--<div class='row main-book' >
         <div class='col-sm-12'>
             <center><h1 >response.title</h1> </center>
@@ -88,17 +129,22 @@
     </div>
     <div class='container' style="margin-top: 10px">
         <div class='col-sm-3'></div>
-        <div class='col-sm-3'><center><button class='btn btn-success' title=book._id>Add to cart</button></center></div>
+        <div class='col-sm-3'><center><button class='btn btn-danger' title=book._id>Add to cart</button></center></div>
         <div class='col-sm-3'><center>book.quantity items</center></div>
     </div>-->
+
 </div>
 
 
 <script>
     $(document).ready(function () {
         console.log(readCookie("idOfUser"));
+        $(".btn-danger").on("mouseenter",function(){
+            $(this).addClass("wow");
+            $(this).addClass("bounceInRight");
+        });
         $.ajax({
-            url: 'http://bookshoopapi.herokuapp.com/getBooks',
+            url: 'https://aminbookshopapi.herokuapp.com/getBooks',
             type: 'GET',
             success: function (response) {
                 if (response.status == 200) {
@@ -107,8 +153,7 @@
                         var html = "<option class='text-center' value=" + book._id + ">" + book.title + "</option>";
                         $("#book").append(html);
 
-                        var html1 =
-                            "<div class='row main-book' title=" + book.publisher + " ><div class='col-sm-12'><center><h1 ><u>" + book.title + "</u></h1> </center><h2 class='pull-right'><i>by </i>" + book.authors[0] + "</h2><br><br><h3 style='font-size:16px;'>" + book.description.substr(0, 600) + " ...</h3><div class='row' style='margin-top: 20px;margin-left:150px;'><div class='col-sm-3'><center>" + ((parseFloat(book.price.split(" ")[0])*0.78)).toPrecision(3).toString() + " GBP</center></div><div class='col-sm-3'><center>" + book.rating + " / 5</center></div><div class='col-sm-3'><center>" + book.quantity + " items</center></div></div><div class='row' style='margin-top:30px;margin-left:150px;'><div class='col-sm-3'></div><div class='col-sm-3'><center><button class='btn btn-success cartBtn' title=" + book._id + ">Add to cart</button></center></div><div class='col-sm-3'></div></div></div></div>";
+                        var html1 = "<tr title=" + book.publisher + "><td>" + book.title + "</td><td>" + book.authors[0] + "</td><td>" + book.description.substr(0, 200) + "...</td><td>" + ((parseFloat(book.price.split(" ")[0]) * 0.78)).toPrecision(3).toString() + " £</td><td>" + book.rating + " / 5</td><td>" + book.quantity + " items</td><td><button class='btn btn-danger cartBtn wow bounceInLeft' title=" + book._id + ">Add to cart</button></td></tr>";
 
                         $('#add-here').append(html1);
 
@@ -122,7 +167,7 @@
                         }
                         else {
                             $.ajax({
-                                url: 'http://bookshoopapi.herokuapp.com/cart',
+                                url: 'https://aminbookshopapi.herokuapp.com/cart',
                                 type: 'POST',
                                 contentType: "application/json; charset=utf-8",
                                 dataType: "json",
@@ -150,14 +195,15 @@
         $('#book').on('change', function () {
             var query = $(this).val();
             $.ajax({
-                url: 'http://bookshoopapi.herokuapp.com/books/search?str=' + query,
+                url: 'https://aminbookshopapi.herokuapp.com/books/search?str=' + query,
                 type: 'GET',
                 success: function (books) {
                     if (books.status == 200) {
                         var book = books.data;
-                        var html1 =
-                            "<div class='row main-book' title=" + book.publisher + " ><div class='col-sm-12'><center><h1 ><u>" + book.title + "</u></h1> </center><h2 class='pull-right'><i>by </i>" + book.authors[0] + "</h2><br><br><h3 style='font-size:16px;'>" + book.description.substr(0, 600) + " ...</h3><div class='row' style='margin-top: 20px;margin-left:150px;'><div class='col-sm-3'><center>" + ((parseFloat(book.price.split(" ")[0])*0.78)).toPrecision(3).toString() + " GBP</center></div><div class='col-sm-3'><center>" + book.rating + " / 5</center></div><div class='col-sm-3'><center>" + book.quantity + " items</center></div></div><div class='row' style='margin-top:30px;margin-left:150px;'><div class='col-sm-3'></div><div class='col-sm-3'><center><button class='btn btn-success cartBtn' title=" + book._id + ">Add to cart</button></center></div><div class='col-sm-3'></div></div></div></div>";
+                        var html1 = "<tr title=" + book.publisher + "><td>" + book.title + "</td><td>" + book.authors[0] + "</td><td>" + book.description.substr(0, 200) + "</td><td>" + ((parseFloat(book.price.split(" ")[0]) * 0.78)).toPrecision(3).toString() + "...</td><td>" + book.rating + "</td><td>" + book.quantity + " items</td><td><button class='btn btn-danger cartBtn' title=" + book._id + ">Add to cart</button></td></tr>";
                         $('#add-here').html("");
+
+
 
                         $('#add-here').append(html1);
 
@@ -174,7 +220,7 @@
                 }
                 else {
                     $.ajax({
-                        url: 'http://bookshoopapi.herokuapp.com/cart',
+                        url: 'https://aminbookshopapi.herokuapp.com/cart',
                         type: 'POST',
                         contentType: "application/json; charset=utf-8",
                         dataType: "json",
