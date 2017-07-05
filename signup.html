@@ -87,7 +87,7 @@
             var username = $('#username').val();
             var password = $('#password').val();
             $.ajax({
-                url: 'http://bookshoopapi.herokuapp.com/signup',
+                url: 'https://aminbookshopapi.herokuapp.com/signup',
                 type: 'POST',
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
@@ -101,7 +101,7 @@
                         document.cookie="idOfUser="+response.user._id+";expires;path=/";
                         var val = readCookie("idOfUser"); 
                         console.log(val);      
-                        window.location="https://bookshoop.herokuapp.com/index.html";
+                        window.location="file:///home/lakapoor/Desktop/coffee/FreeLancing/Amin/bookshop-client/index.html";
 
                     }
                     else {

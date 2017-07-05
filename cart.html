@@ -67,11 +67,11 @@
 
         if (readCookie("idOfUser") == null) {
             alert("Login plzz");
-            window.location = 'https://bookshoop.herokuapp.com/login.html';
+            window.location = 'file:///home/lakapoor/Desktop/coffee/FreeLancing/Amin/bookshop-client/login.html';
         }
         else {
             $.ajax({
-                url: 'https://bookshoopapi.herokuapp.com/cart1',
+                url: 'https://aminbookshopapi.herokuapp.com/cart1',
                 type: 'POST',
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
@@ -101,7 +101,7 @@
                             }
                             else {
                                 $.ajax({
-                                    url: 'https://bookshoopapi.herokuapp.com/removecart',
+                                    url: 'https://aminbookshopapi.herokuapp.com/removecart',
                                     type: 'POST',
                                     contentType: "application/json; charset=utf-8",
                                     dataType: "json",
@@ -133,7 +133,7 @@
                             }
                             else {
                                 $.ajax({
-                                    url: 'http://bookshoopapi.herokuapp.com/buy',
+                                    url: 'https://aminbookshopapi.herokuapp.com/buy',
                                     type: 'POST',
                                     contentType: "application/json; charset=utf-8",
                                     dataType: "json",
